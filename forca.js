@@ -15,7 +15,7 @@ var gllws
 
 /*Arrays de palavras
 */
-var frts = ['maçã','banana','laranja','uva','morango','abacaxi','pêssego','manga','limão','kiwi','mamão','pera','cereja','framboesa','mirtilo','maracujá','ameixa','coco','açaí','acerola','ananás','anona','arando','cacau','caju','cajá','cajuí','caqui','cidra','damasco','figo','goiaba','graviola','guaraná','ingá','jabuticaba','jaca','jambo','jatobá','janipapo','lichia','lima','mabolo','macadâmia','mangaba','mangostão','marula','murici','nectarina','nêspera','pupunha','romã','salak','sapoti','spondias','tamarindo','tangerina','tacumã','umbu','uvaia','akee','alfarroba','amora','azeda','bacaba','bacuri'];
+var frts = ['maçã','banana','laranja','uva','morango','abacaxi','pêssego','manga','limão','kiwi','mamão','pera','cereja','framboesa','mirtilo','maracujá','ameixa','coco','açaí','acerola','ananás','anona','arando','cacau','caju','cajá','cajuí','caqui','cidra','damasco','figo','goiaba','graviola','guaraná','ingá','jabuticaba','jaca','jambo','jatobá','janipapo','lichia','lima','mabolo','macadâmia','mangaba','mangostão','marula','murici','nectarina','nêspera','pupunha','romã','salak','sapoti','spondias','tamarindo','tangerina','tacumã','umbu','uvaia','akee','alfarroba','amora','bacaba','bacuri'];
 
 /*variaveis que serão utilizadas
 */
