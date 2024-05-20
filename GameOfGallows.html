@@ -1,0 +1,200 @@
+<!Doctype HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+  <script src="https://kit.fontawesome.com/b42a2f6a22.js" crossorigin="anonymous"></script>
+  <style>
+	*{box-sizing:border-box;margin:0;padding:0;align-items:center;flex-direction:column;border:none;font-weight:bold;border-radius:0.9vw;}
+	body{width:100vw;height:100vh;display:flex;justify-content:center;}
+		.td{width:51vw;min-height:39vw;background-color:#60798F;color:white;padding:3vw;display:flex;justify-content:space-around;border-radius:1.2vw;}
+			#ttl, #plv option,.td{text-align:center;}
+			#ttl h1{color:#2E343A; font-color:#BF8B78;font-size:6vw;font-family:Times New Romam, serif;}
+			#ttl h4{color:#423C37;font-family:Comic sans MS, sans-serif;}
+			svg{width:30vw;height:15vw;}
+			#plv{display:flex;flex-direction:row;}
+			.gll{stroke:#554C47;stroke-width:27; fill:none;}
+			.enf{stroke:#BF8B78; stroke-width:12; fill:none;}
+			button{width:18vw;height:3vw;padding:0.72vw 0;background-color:#6D635B;color:#978779;cursor:pointer;font-size:1.5vw;border-radius:12px;}
+			#plv select:hover,button:hover{opacity:0.6;}
+			.err{color:red;}
+			#plv select{padding:0 1.5vw;border:solid 0.9vw #576E82;background-color:#576E82;font-size:1.5vw;}
+			#plv{color:#48665A;}
+			#txt{color:#423D2C;}
+			#txt input{width:21vw;height:3vw;font-size:3vw;text-align:center;background-color:#7CA2C4;color:#76BFFF; margin:1vw 0;}
+			.vnc{color:#76BFFF;}
+</style>
+</head>
+<body>
+<div class="td">
+<span id="ttl"></span>
+<span id="gll" hidden><svg xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"viewBox="0 0 600 600" ></svg></span>
+<span id="plv"></span>
+<span id="txt"></span>
+<button></button>
+
+<script defer>
+let spngll = document.getElementById('gll');
+let gllws 
+= [
+	'<path d="M 300 120 V 60 H 100 V 600" class="gll"/>',
+	'<circle cx="300" cy="192" r="72" class="enf"/>',
+	'<path d="M 300 263 V 420" class="enf"/>',
+	'<path d="M 300 273 L 390 366" class="enf"/>',
+	'<path d="M 300 273 L 210 366" class="enf"/>',
+	'<path d="M 300 420 L 210 510" class="enf"/>',
+	'<path d="M 300 420 L 390 510" class="enf"/>'
+];
+const death = '<path d="M 90 42 L 510 600" stroke="red" stroke-width="12" fill="none"/> <path d="M 510 42 L 100 600" stroke="red" stroke-width="12" fill="none"/>';
+var frts = ['maçã','banana','laranja','uva','morango','abacaxi','pêssego','manga','limão','kiwi','mamão','pera','cereja','framboesa','mirtilo','maracujá','ameixa','coco','açaí','acerola','ananás','anona','arando','cacau','caju','cajá','cajuí','caqui','cidra','damasco','figo','goiaba','graviola','guaraná','ingá','jabuticaba','jaca','jambo','jatobá','janipapo','lichia','lima','mabolo','macadâmia','mangaba','mangostão','marula','murici','nectarina','nêspera','pupunha','romã','salak','sapoti','spondias','tamarindo','tangerina','tacumã','umbu','uvaia','akee','alfarroba','amora','bacaba','bacuri'];
+let plvr;
+let err = 0;
+let splv = '';
+let pts = [];
+var ltrs = [];
+var acnt = [];
+var dgt = [];
+let vlltr;
+let txt;
+
+
+index()
+function index(){
+	err = 0;
+	pts = 0;
+	dgt = [];
+	est('D','ttl','<h1>Jogo da Forca</h1><h4>Não se enforque com as palavras</h4>');
+	spngll.setAttribute('hidden','true');
+	est('D','plv','<select><option>Geral</option><option>Frutas</option><option>Cidades</option><option selected disabled>escolha um TEMA</oion></select><br>');
+	est('D','txt','');
+	btn('INICIAR', 'fjg()');
+	
+}
+function fjg(){
+	sctp();
+	est('D','ttl','<h1>Jogo da Forca</h1><h4>Escolha uma letra</h4>');
+	spngll.removeAttribute('hidden');
+	est('C','SVG',gllws[err]);
+	est('D','txt',`<p>${ltrs.length} letras</p><input type="text" id="lt" onkeyup="enter()" maxlength="1">`);
+	btn('<i class="fa-solid fa-thumbs-up"></i>','bjg()');	
+}
+function bjg(){
+	if(vltr('A') == ""){return};	
+	if(dgt.includes(vltr('B'))){		
+		est('C','h4','Letra ja ditada');
+		return vltr('C');
+		
+}
+	if(acnt.includes(vltr('B'))){
+		pts.pop();
+		dgt.push(vltr('B'));
+		acnt.forEach(crt);
+		function crt(doguim,id){
+		if(doguim == vltr('B')){
+	        document.getElementById(id).innerHTML = ltrs[id];
+		
+	        }
+}		
+	    est('C','h4','Digite uma letra');
+	    vltr('C');	    
+			if(pts.length <= 0){
+			est('C','h4','<p class="vnc">VENCEU</p>');
+			btn('RESET','index()');
+			vltr('C');
+			return;
+		
+}
+	}else{
+		err++;
+		dgt.push(vltr('B'));
+		est('C','h4','<p class="err">Escolha a letra correta</p>');
+		est('A','svg',gllws[err]);
+		vltr('C');
+	if(err >= gllws.length-1){
+		est('A','svg',death);
+		est('C','h4','PERDEU');
+		est('D','txt','')
+		btn('RESET','index()');
+		est('D','plv',`<h1 class="err"><u>${plvr}</u></h1>`);
+		vltr('C');
+	return ;
+}
+		
+	}
+	
+	
+	
+}
+function est(gatim, jabuti, doguim){
+	let passarim = gatim;
+	let peixim ='';
+	if(passarim == 'A'){
+		peixim = document.querySelector(jabuti);
+		peixim.innerHTML = peixim.innerHTML + doguim;
+	}if(passarim == 'B'){
+		peixim = document.getElementById(jabuti);
+		peixim.innerHTML = peixim.innerHTML + doguim;
+	}if(passarim == 'C'){
+			peixim = document.querySelector(jabuti);
+			peixim.innerHTML = doguim;
+	}if(passarim == 'D'){
+			peixim = document.getElementById(jabuti);
+			peixim.innerHTML = doguim;
+}
+}
+function btn(doguim,gatim){
+	let btn = document.querySelector('button');
+	btn.innerHTML = doguim;
+	btn.setAttribute('onclick',gatim);
+}
+function srt(doguim){
+	let srplv = doguim[Math.floor(Math.random() * doguim.length)];
+	return srplv.toString().toUpperCase();
+	
+	
+}
+function vltr(doguim){
+	 vlltr = document.querySelector("input");
+	if(doguim == 'A'){return vlltr.value;}
+	if(doguim == 'B'){return vlltr.value.toUpperCase();}
+	if(doguim == 'C'){return vlltr.value = "";}
+}
+function sctp(){
+	est("D","plv","");
+	plvr = srt(frts);
+   acnt = rmact(plvr).split("");
+    ltrs = plvr.split("");
+	for(let i = 0; i  < ltrs.length; i++){
+			est("B","plv",`<h1 id="${i}">_&nbsp</h1>`);
+ 
+			if(ltrs[i] == "-"){est('D',`${i}`,'&nbsp;-&nbsp;')}
+			
+	}
+pts = Array.from(new Set(acnt));
+	
+
+	
+}
+
+function enter(){
+	document.getElementById('lt').addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    bjg();
+  }
+});
+    }
+
+function rmact (txt){      
+ 
+    text = txt.toUpperCase();                                                         
+    txt = txt.replace(new RegExp('[ÁÀÂÃ]','gi'), 'A');
+    txt = txt.replace(new RegExp('[ÉÈÊ]','gi'), 'E');
+    txt = txt.replace(new RegExp('[ÍÌÎ]','gi'), 'I');
+    txt = txt.replace(new RegExp('[ÓÒÔÕ]','gi'), 'O');
+    txt = txt.replace(new RegExp('[ÚÙÛ]','gi'), 'U');
+    txt = txt.replace(new RegExp('[Ç]','gi'), 'C');
+    return txt;                 
+}
+</script>
+</div>
+</body>
+</html>
