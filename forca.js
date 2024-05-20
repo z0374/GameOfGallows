@@ -168,22 +168,31 @@ function vltr(doguim){
 	if(doguim == 'B'){return vlltr.value.toUpperCase();}
 	if(doguim == 'C'){return vlltr.value = "";}
 }
-	/*Fun*/
+	/*Função que manipula a palavra secreta*/
 function sctp(){
+	/*esvazia o seletor plv no HTML*/
 	est("D","plv","");
+	/*atribua a palavra secreta a variável plvr*/
 	plvr = srt(frts);
+	/*separa as letras da palavra secreta e retira todos os acentos*/
    acnt = rmact(plvr).split("");
-	console.log(plvr);
+	/*separa as letras da palavra secreta deixando os acentos*/
     ltrs = plvr.split("");
+		/*imprime os espaços vazios que ocultam a palavra secreta de acordo com o número de letras da palavra*/
 		for(let i = 0; i  < ltrs.length; i++){
-			est("B","plv",`<h1 id="${i}">_&nbsp;</h1>`);
+			est("B","plv",`<h1 id="${i}">_&nbsp</h1>`);
+		/*Verifica coloca o hífen no lugar adequado*/ 
+			if(ltrs[i] == "-"){est('D',`${i}`,'&nbsp;-&nbsp;')}
 			
 	}
+/*Cria um array com as letras da palavra sem repetir os caracteres(usamos para calcular os pontos precisos para vencer)*/
 pts = Array.from(new Set(acnt));
 	
 
 	
 }
+
+/*Função responsável por escutar quando precionamos no input*/
 function enter(){
 	document.getElementById('lt').addEventListener('keypress', function(event) {
   if (event.key === 'Enter') {
@@ -191,6 +200,8 @@ function enter(){
   }
 });
     }
+
+/*função que retira os acentos*/
 function rmact (txt){      
  
     text = txt.toUpperCase();                                                         
