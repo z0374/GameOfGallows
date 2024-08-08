@@ -37,8 +37,7 @@
 */
 let spngll = document.getElementById('gll');
 //Sprite
-var gllws 
-= [
+var gllws = [
       '<path d="M 300 120 V 60 H 100 V 600" class="gll"/>',
       '<circle cx="300" cy="192" r="72" class="enf"/>',
       '<path d="M 300 263 V 420" class="enf"/>',
@@ -91,7 +90,7 @@ function fjg(t){
       sctp();
       est('D','ttl','<h1>Jogo da Forca</h1><h4>Escolha uma letra</h4>');
       spngll.removeAttribute('hidden');
-      est('C','SVG',gllws[err]);
+      est('C','svg',gllws[err]);
       est('D','txt',`<p>${ltrs.length} letras</p><input type="text" id="lt" onkeyup="enter()" maxlength="1">`);
       btn('<i class="fa-solid fa-thumbs-up"></i>','bjg()');
       
@@ -140,10 +139,8 @@ function bjg(){
                   est('C','h4','<p class="vnc">VENCEU</p>');
                       est('D','txt','')
                   btn('RESET','fjg()');
-                  dgt=[];
-                  return;
-            
-}
+                  dgt=[];err=0;
+                  return;     }
       /*verifica se a letra citada esta correta*/
       }else{
             err++;
@@ -171,7 +168,7 @@ function bjg(){
       /*Função que estrutura o HTML*/
 function est(gatim, jabuti, doguim){
       let passarim = gatim;
-      let peixim ='';
+      let peixim;
       if(passarim == 'A'){
             peixim = document.querySelector(jabuti);
             peixim.innerHTML = peixim.innerHTML + doguim;
@@ -217,7 +214,7 @@ function sctp(){
       /*esvazia o seletor plv no HTML*/
       est("D","plv","");
       /*atribua a palavra secreta a variável plvr*/
-      plvr = srt(temas(tema));console.log(tema + plvr);
+      plvr = srt(temas(tema));
       /*separa as letras da palavra secreta e retira todos os acentos*/
    acnt = rmact(plvr).split("");
       /*separa as letras da palavra secreta deixando os acentos*/
