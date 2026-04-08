@@ -2,43 +2,53 @@
 <html>
 <head>
 	<meta charset="utf-8">
-  <script src="https://kit.fontawesome.com/b42a2f6a22.js" crossorigin="anonymous"></script>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+  <!--script src="https://kit.fontawesome.com/b42a2f6a22.js" crossorigin="anonymous"></script-->
   <style>
 	*{box-sizing:border-box;margin:0;padding:0;align-items:center;flex-direction:column;border:none;font-weight:bold;border-radius:0.9vw;}
 	body{width:100vw;height:100vh;display:flex;justify-content:center;}
-		.td{width:51vw;min-height:39vw;background-color:#60798F;color:white;padding:3vw;display:flex;justify-content:space-around;border-radius:1.2vw;}
+		.td{width:51vw;min-height:60vh;background-color:#60798F;color:white;padding:3vw;display:flex;justify-content:space-around;border-radius:1.2vw;}
 			#ttl, #plv option,.td{text-align:center;}
-			#ttl h1{color:#2E343A; font-color:#BF8B78;font-size:6vw;font-family:Times New Romam, serif;}
-			#ttl h4{color:#423C37;font-family:Comic sans MS, sans-serif;}
-			svg{width:30vw;height:15vw;}
-			#plv{display:flex;flex-direction:row;}
+			#ttl h1,#ttl h2{color:#2E343A; font-color:#BF8B78;font-family:Times New Romam, serif;}#ttl h1{font-size:3.9rem;}
+			#ttl h4{color:#423C37;font-family:Comic sans MS, sans-serif;font-size:1.5rem;}
+			svg{width:9rem;height:9rem;}
+			#plv,#gll{display:flex;flex-direction:row;}
 			.gll{stroke:#554C47;stroke-width:27; fill:none;}
 			.enf{stroke:#BF8B78; stroke-width:12; fill:none;}
-			button{width:18vw;height:3vw;padding:0.72vw 0;background-color:#6D635B;color:#978779;cursor:pointer;font-size:1.5vw;border-radius:12px;}
+			button{width:60%;height:3rem;padding:0.06% 0;background-color:#6D635B;color:#978779;cursor:pointer;font-size:0.9rem;border-radius:12px;}
 			#plv select:hover,button:hover{opacity:0.6;}
 			.err{color:red;}
-			#plv select{padding:0 1.5vw;border:solid 0.9vw #576E82;background-color:#576E82;font-size:1.5vw;}
+			#plv select{padding:0 1.5vw;border:solid 0.9vw #576E82;background-color:#576E82;font-size:0.9rem;}
 			#plv{color:#48665A;}
-			#txt{color:#423D2C;}
-			#txt input{width:21vw;height:3vw;font-size:3vw;text-align:center;background-color:#7CA2C4;color:#76BFFF; margin:1vw 0;}
+		 p{color:#423D2C;text-decoration:underline;}
+			#txt #lt{width:36%;height:3rem;font-size:3rem;text-align:center;background-color:#7CA2C4;color:#76BFFF; margin:1vw 0;resize:none;overflow:hidden;}
 			.vnc{color:#76BFFF;}
+            .return{opacity:0.09;}.return:hover{opacity:0.9;}
+        #tcld{width:90vw;height:auto;flex-flow:row wrap;justify-content:center;}.tcls{width:3rem;height:3rem;margin:0.3rem;}.tcls:disabled{opacity:0.3;}
+        @media(max-width:800px){
+            *{overflow:hidden;}
+            .td{width:96vw; height:auto;overflow:visible;}
+            #plv select{font-size:1.5rem;}
+            #txt #lt{margin:0.03rem;}
+        }
 </style>
 </head>
 <body>
-<div class="td">
+<a class="return" href="/portifolio" style="position:absolute;top:0.3vw;left:0.6vw;font-size:1.5rem;"><i class="fa-solid fa-arrow-left"></i></a>
+<main class="td">
 <span id="ttl"></span>
-<span id="gll" hidden><svg xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"viewBox="0 0 600 600" ></svg></span>
+<span id="gll"><svg xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"viewBox="0 0 600 600" ></svg><p id="gllp"></p></span>
 <span id="plv"></span>
 <span id="txt"></span>
 <button></button>
-
+<section id='tcld'></section>
+    </main>
 <script defer>
 /*pega o span do desenho
 */
 let spngll = document.getElementById('gll');
 //Sprite
-var gllws 
-= [
+var gllws = [
       '<path d="M 300 120 V 60 H 100 V 600" class="gll"/>',
       '<circle cx="300" cy="192" r="72" class="enf"/>',
       '<path d="M 300 263 V 420" class="enf"/>',
@@ -55,6 +65,7 @@ let cdGO = ["Abadia_de_Goiás", "Abadiânia", "Acreúna", "Adelândia", "Água_F
 
 
 let grl = frts.concat(cdGO);
+const alf = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 /*variaveis que serão utilizadas
 */
@@ -65,20 +76,24 @@ let pts = [];
 var ltrs = [];
 var acnt = [];
 var dgt = [];
-let vlltr;
 let txt;
 let tema;
+let vlr;
+let tecla='';
+
+const gll = document.getElementById('gll');
 
 index()
 
 //Tela inicial
 function index(){
+     document.getElementById('tcld').style.display = 'none';
       err = 0;
       pts = 0;
       dgt = [];
       est('D','ttl','<h1>Jogo da Forca</h1><h4>Não se enforque com as palavras</h4>');
-      spngll.setAttribute('hidden','true');
-      est('D','plv','<select id="tema"><option value="geral">Geral</option><option value="frutas">Frutas</option><option value="cidadesDeGoiás">Cidades</option><option value="geral" selected disabled>escolha um TEMA</option></select><br>');
+        gll.style.display='none'
+      est('D','plv','<select id="tema"><option value="geral">Geral</option><option value="frutas">Frutas</option><option value="cidadesDeGoiás">Cidades</option><option value="dsbl" selected disabled>escolha um TEMA</option></select><br>');
       est('D','txt','');
       btn('INICIAR', 'fjg()');
       
@@ -86,22 +101,32 @@ function index(){
 
 /*Tela do front do Jogo
 */
-function fjg(t){
+function fjg(){
+   
       if(tema==null){tema = document.getElementById("tema").value;}
+      if(tema=='dsbl'){est('C','h4','Escolha o tema!');tema=null;return;}
       sctp();
-      est('D','ttl','<h1>Jogo da Forca</h1><h4>Escolha uma letra</h4>');
-      spngll.removeAttribute('hidden');
-      est('C','SVG',gllws[err]);
-      est('D','txt',`<p>${ltrs.length} letras</p><input type="text" id="lt" onkeyup="enter()" maxlength="1">`);
+     gll.style.display='flex';
+      est('D','ttl','<h2>Jogo da Forca</h2><h4>Escolha uma letra</h4>');
+      est('C','svg',gllws[err]);
+      est('D','gllp',ltrs.length+' letras');
+      est('D','txt',`<textarea id="lt" onkeyup="enter()" maxlength="1"></textarea>`);
       btn('<i class="fa-solid fa-thumbs-up"></i>','bjg()');
+        if(window.innerWidth < 920){
+             document.getElementById('tcld').style.display = 'flex';
+            teclado();
+            document.getElementById('txt').style.display='none';
+            document.querySelector('button').style.display='none';
+
+        }
       
 }
 
 /*BackEnd do jogo*/
 function bjg(){
-      
+      const lt = document.querySelector('textarea');
       /*verifica se o input esta vazio */
-      if(vltr('A') == ""){return};  
+      if(vltr('A')==''){return};  
       
       /*verifica se a letra ja foi citada antes*/
       if(dgt.includes(vltr('B'))){
@@ -131,7 +156,7 @@ function bjg(){
 }           
           /*Atualização do display h4*/
           est('C','h4','Digite uma letra');
-          vltr('C');
+          lt.value.length==0;
           
             
             /*Verifica se ganhou o jogo*/
@@ -140,11 +165,13 @@ function bjg(){
                   est('C','h4','<p class="vnc">VENCEU</p>');
                       est('D','txt','')
                   btn('RESET','fjg()');
-                  dgt=[];
-                  return;
-            
-}
-      /*verifica se a letra citada esta correta*/
+                    document.querySelector('button').style.display='block';
+                    document.getElementById('tcld').style.display = 'none';
+                lt.textContent =='';
+                  dgt=[];err=0;
+                  return;     }
+            return;
+      /*verifica se a letra citada não esta correta*/
       }else{
             err++;
             dgt.push(vltr('B'));
@@ -156,7 +183,9 @@ function bjg(){
       if(err >= gllws.length-1){
             est('A','svg',death);
             est('C','h4','PERDEU');
-            est('D','txt','')
+            est('D','txt','');
+            document.querySelector('button').style.display='block';
+            document.getElementById('tcld').style.display = 'none';
             btn('RESET','index()');
             est('D','plv',`<h1 class="err"><u>${plvr}</u></h1>`);
             tema=null;
@@ -166,12 +195,12 @@ function bjg(){
       }
       
       
-      
+      return;
 }
       /*Função que estrutura o HTML*/
 function est(gatim, jabuti, doguim){
       let passarim = gatim;
-      let peixim ='';
+      let peixim;
       if(passarim == 'A'){
             peixim = document.querySelector(jabuti);
             peixim.innerHTML = peixim.innerHTML + doguim;
@@ -207,17 +236,17 @@ function temas(tema){
 
       /*Função que resume o valor do input*/
 function vltr(doguim){
-       vlltr = document.querySelector("input");
-      if(doguim == 'A'){return vlltr.value;}
-      if(doguim == 'B'){return vlltr.value.toUpperCase();}
-      if(doguim == 'C'){return vlltr.value = "";}
+    let vlltr = tecla || document.querySelector("textarea").value;
+      if(doguim == 'A'){return vlltr;}
+      if(doguim == 'B'){return vlltr.toUpperCase();}
+      if(doguim == 'C'){vlltr=''; tecla=''; document.querySelector("textarea").value = ""; return;}
 }
       /*Função que manipula a palavra secreta*/
 function sctp(){
       /*esvazia o seletor plv no HTML*/
       est("D","plv","");
       /*atribua a palavra secreta a variável plvr*/
-      plvr = srt(temas(tema));console.log(tema + plvr);
+      plvr = srt(temas(tema));
       /*separa as letras da palavra secreta e retira todos os acentos*/
    acnt = rmact(plvr).split("");
       /*separa as letras da palavra secreta deixando os acentos*/
@@ -234,14 +263,34 @@ function sctp(){
 pts = Array.from(new Set(he(rmact(plvr)).split("")));
       
 }
-
+function teclado(){
+    const tcld = document.getElementById('tcld');
+    const ltr = document.querySelector("textarea");
+    tcld.innerHTML='';
+    for(let i=0;i<alf.length;i++){
+        let tcl = alf[i].toUpperCase();
+        const tcls = document.createElement('button');
+        tcls.classList.add('tcls');
+        tcls.textContent=tcl;
+            tcls.onclick=()=>{
+                tecla=alf[i];
+                bjg();
+                tcls.disabled=true;
+                return 
+            }
+        tcld.append(tcls);
+    
+    }
+    return tcld;
+}
 /*Função responsável por escutar quando precionamos ENTER no input*/
 function enter(){
       document.getElementById('lt').addEventListener('keypress', function(event) {
   if (event.key === 'Enter') {
     bjg();
+    
   }
-});
+});return;
     }
 
 /*função que retira os acentos*/
@@ -262,6 +311,5 @@ function he (pl){
       return pl;
 }
 </script>
-</div>
 </body>
 </html>
